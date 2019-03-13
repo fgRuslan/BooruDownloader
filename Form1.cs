@@ -128,9 +128,9 @@ namespace GelDownloader
                     using (WebClient wc = new WebClient())
                     {
                         if(checkBox1.Checked)
-                            wc.DownloadFileAsync(new System.Uri(url), "./out/" + FnameFromURL(url));//TODO: Files must be downloaded to out/ directory.
+                            wc.DownloadFileAsync(new System.Uri(url), "./out/" + FnameFromURL(url));
                         else
-                            wc.DownloadFileAsync(new System.Uri(url), "./out/" + tags + ExtFromURL(url));//TODO: Files must be downloaded to out/ directory.
+                            wc.DownloadFileAsync(new System.Uri(url), "./out/" + tags + ExtFromURL(url));
                     }
         }
 
