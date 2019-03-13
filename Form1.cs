@@ -37,6 +37,29 @@ namespace GelDownloader
             bool exists = System.IO.Directory.Exists("./out/");
             if(!exists)
                 System.IO.Directory.CreateDirectory("./out/");
+
+            tagsBox.GotFocus += new EventHandler(this.TagsGotFocus);
+            tagsBox.LostFocus += new EventHandler(this.TagsLostFocus);
+        }
+
+        public void TagsGotFocus(object sender, EventArgs e)
+        {
+            TextBox tb = (TextBox)sender;
+            if (tb.Text == "tags separated by whitespace")
+            {
+                tb.Text = "";
+                tb.ForeColor = Color.Black;
+            }
+        }
+
+        public void TagsLostFocus(object sender, EventArgs e)
+        {
+            TextBox tb = (TextBox)sender;
+            if (tb.Text == "")
+            {
+                tb.Text = "tags separated by whitespace";
+                tb.ForeColor = Color.DarkGray;
+            }
         }
 
         private int getPostCount()

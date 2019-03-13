@@ -59,7 +59,7 @@
             // 
             this.domainBox.Location = new System.Drawing.Point(74, 19);
             this.domainBox.Name = "domainBox";
-            this.domainBox.Size = new System.Drawing.Size(100, 20);
+            this.domainBox.Size = new System.Drawing.Size(320, 20);
             this.domainBox.TabIndex = 2;
             this.domainBox.Text = "http://gelbooru.com";
             // 
@@ -116,7 +116,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(624, 442);
+            this.ClientSize = new System.Drawing.Size(624, 137);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.statusLabel);
             this.Controls.Add(this.label3);
