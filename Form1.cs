@@ -134,7 +134,7 @@ namespace GelDownloader
                     }
         }
 
-        private void downloadButton_Click(object sender, EventArgs e)
+        private async void downloadButton_Click(object sender, EventArgs e)
         {
 
             int postCount = getPostCount();
@@ -150,7 +150,7 @@ namespace GelDownloader
                 statusLabel.Text = "Downloading...";
                 for (int i = 0; i < postCount; i++)
                 {
-                    downloadPosts(i);
+                    await Task.Run(() => downloadPosts(i));
                 }
                 statusLabel.ForeColor = Color.Green;
                 statusLabel.Text = "Ready.";
