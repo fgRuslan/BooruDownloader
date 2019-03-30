@@ -36,6 +36,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.statusLabel = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.isDanbooruSite = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // tagsBox
@@ -59,7 +60,7 @@
             // 
             this.domainBox.Location = new System.Drawing.Point(74, 19);
             this.domainBox.Name = "domainBox";
-            this.domainBox.Size = new System.Drawing.Size(320, 20);
+            this.domainBox.Size = new System.Drawing.Size(202, 20);
             this.domainBox.TabIndex = 2;
             this.domainBox.Text = "http://gelbooru.com";
             // 
@@ -112,11 +113,22 @@
             this.checkBox1.Text = "Keep original names";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
+            // isDanbooruSite
+            // 
+            this.isDanbooruSite.AutoSize = true;
+            this.isDanbooruSite.Location = new System.Drawing.Point(283, 21);
+            this.isDanbooruSite.Name = "isDanbooruSite";
+            this.isDanbooruSite.Size = new System.Drawing.Size(73, 17);
+            this.isDanbooruSite.TabIndex = 9;
+            this.isDanbooruSite.Text = "Danbooru";
+            this.isDanbooruSite.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(624, 137);
+            this.Controls.Add(this.isDanbooruSite);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.statusLabel);
             this.Controls.Add(this.label3);
@@ -143,6 +155,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label statusLabel;
         private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox isDanbooruSite;
     }
 }
 

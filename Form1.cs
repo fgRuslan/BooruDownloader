@@ -59,25 +59,52 @@ namespace GelDownloader
 
         private async void downloadButton_Click(object sender, EventArgs e)
         {
-            GelEngine engine = new GelEngine();
-            int postCount = engine.getPostCount(domainBox.Text, tagsBox.Text);
-            if (postCount == 0)
-            {
-                Console.WriteLine("No posts found by tag " + tagsBox.Text);
-                statusLabel.ForeColor = Color.Red;
-                statusLabel.Text = "No posts found.";
+            if (isDanbooruSite.Checked){//If it's a danbooru site
+                DanEngine engine = new DanEngine();
+                int postCount = engine.getPostCount(domainBox.Text, tagsBox.Text);
+                if (postCount == 0)
+                {
+                    Console.WriteLine("No posts found by tag " + tagsBox.Text);
+                    statusLabel.ForeColor = Color.Red;
+                    statusLabel.Text = "No posts found.";
+                }
+                else
+                {
+                    statusLabel.ForeColor = Color.Blue;
+                    statusLabel.Text = "Downloading...";
+                    for (int i = 0; i < postCount; i++)
+                    {
+                        await Task.Run(() => engine.downloadPosts(domainBox.Text, tagsBox.Text, i, checkBox1.Checked));
+                    }
+                    statusLabel.ForeColor = Color.Green;
+                    statusLabel.Text = "Ready.";
+                    MessageBox.Show("Download compelete!", "GelDownloader", MessageBoxButtons.OK, MessageBoxIcon.None, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
+                }
             }
             else
-            {
-                statusLabel.ForeColor = Color.Blue;
-                statusLabel.Text = "Downloading...";
-                for (int i = 0; i < postCount; i++)
+            {//If it's a gelbooru site
+
+                GelEngine engine = new GelEngine();
+                int postCount = engine.getPostCount(domainBox.Text, tagsBox.Text);
+                if (postCount == 0)
                 {
-                    await Task.Run(() => engine.downloadPosts(domainBox.Text, tagsBox.Text, i, checkBox1.Checked));
+                    Console.WriteLine("No posts found by tag " + tagsBox.Text);
+                    statusLabel.ForeColor = Color.Red;
+                    statusLabel.Text = "No posts found.";
                 }
-                statusLabel.ForeColor = Color.Green;
-                statusLabel.Text = "Ready.";
-                MessageBox.Show("Download compelete!", "GelDownloader", MessageBoxButtons.OK, MessageBoxIcon.None, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);    
+                else
+                {
+                    statusLabel.ForeColor = Color.Blue;
+                    statusLabel.Text = "Downloading...";
+                    for (int i = 0; i < postCount; i++)
+                    {
+                        await Task.Run(() => engine.downloadPosts(domainBox.Text, tagsBox.Text, i, checkBox1.Checked));
+                    }
+                    statusLabel.ForeColor = Color.Green;
+                    statusLabel.Text = "Ready.";
+                    MessageBox.Show("Download compelete!", "GelDownloader", MessageBoxButtons.OK, MessageBoxIcon.None, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
+                }
+
             }
         }
     }
