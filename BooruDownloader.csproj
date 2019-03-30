@@ -7,8 +7,8 @@
     <ProjectGuid>{2FFBCAB3-877C-4149-9DF5-2E374A711204}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GelDownloader</RootNamespace>
-    <AssemblyName>GelDownloader</AssemblyName>
+    <RootNamespace>BooruDownloader</RootNamespace>
+    <AssemblyName>BooruDownloader</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <PublishUrl>опубликовать\</PublishUrl>
@@ -47,7 +47,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>gelbooru.ico</ApplicationIcon>
+    <ApplicationIcon>booru.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -115,7 +115,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="gelbooru.ico" />
+    <Content Include="booru.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

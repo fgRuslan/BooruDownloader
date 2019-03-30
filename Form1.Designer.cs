@@ -1,4 +1,4 @@
-﻿namespace GelDownloader
+﻿namespace BooruDownloader
 {
     partial class Form1
     {
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tagsBox = new System.Windows.Forms.TextBox();
             this.downloadButton = new System.Windows.Forms.Button();
             this.domainBox = new System.Windows.Forms.TextBox();
@@ -137,8 +138,9 @@
             this.Controls.Add(this.domainBox);
             this.Controls.Add(this.downloadButton);
             this.Controls.Add(this.tagsBox);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
-            this.Text = "GelDownloader";
+            this.Text = "BooruDownloader";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

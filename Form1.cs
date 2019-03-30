@@ -15,7 +15,7 @@ using System.Text.RegularExpressions;
 using System.Xml;
 
 
-namespace GelDownloader
+namespace BooruDownloader
 {
     public partial class Form1 : Form
     {
@@ -78,7 +78,7 @@ namespace GelDownloader
                     }
                     statusLabel.ForeColor = Color.Green;
                     statusLabel.Text = "Ready.";
-                    MessageBox.Show("Download compelete!", "GelDownloader", MessageBoxButtons.OK, MessageBoxIcon.None, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
+                    MessageBox.Show("Download compelete!", "BooruDownloader", MessageBoxButtons.OK, MessageBoxIcon.None, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
                 }
             }
             else
@@ -102,7 +102,7 @@ namespace GelDownloader
                     }
                     statusLabel.ForeColor = Color.Green;
                     statusLabel.Text = "Ready.";
-                    MessageBox.Show("Download compelete!", "GelDownloader", MessageBoxButtons.OK, MessageBoxIcon.None, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
+                    MessageBox.Show("Download compelete!", "BooruDownloader", MessageBoxButtons.OK, MessageBoxIcon.None, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
                 }
 
             }

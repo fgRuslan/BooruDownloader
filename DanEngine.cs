@@ -10,7 +10,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Xml;
 
-namespace GelDownloader
+namespace BooruDownloader
 {
     class DanEngine
     {
