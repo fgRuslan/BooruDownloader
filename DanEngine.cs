@@ -81,7 +81,9 @@ namespace BooruDownloader
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(domain + "/posts.xml?page=dapi&s=post&q=index&tags=" + tags);
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+#if DEBUG
             AllocConsole();
+#endif
             using (Stream stream = response.GetResponseStream())
             {
                 StreamReader reader = new StreamReader(stream, Encoding.UTF8);

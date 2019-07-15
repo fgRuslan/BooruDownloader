@@ -38,6 +38,7 @@
             this.statusLabel = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.isDanbooruSite = new System.Windows.Forms.CheckBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // tagsBox
@@ -124,11 +125,23 @@
             this.isDanbooruSite.Text = "Danbooru";
             this.isDanbooruSite.UseVisualStyleBackColor = true;
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
+            this.label4.ForeColor = System.Drawing.Color.Blue;
+            this.label4.Location = new System.Drawing.Point(482, 48);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(57, 20);
+            this.label4.TabIndex = 10;
+            this.label4.Text = "label4";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(624, 137);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.isDanbooruSite);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.statusLabel);
@@ -158,6 +171,7 @@
         private System.Windows.Forms.Label statusLabel;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.CheckBox isDanbooruSite;
+        private System.Windows.Forms.Label label4;
     }
 }
 

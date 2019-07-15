@@ -35,6 +35,7 @@ namespace BooruDownloader
 
             tagsBox.GotFocus += new EventHandler(this.TagsGotFocus);
             tagsBox.LostFocus += new EventHandler(this.TagsLostFocus);
+            label4.Text = "";
         }
 
         public void TagsGotFocus(object sender, EventArgs e)
@@ -76,10 +77,11 @@ namespace BooruDownloader
                     for (int i = 1; i < postCount; i++)
                     {
                         await Task.Run(() => engine.downloadPosts(domainBox.Text, tagsBox.Text, i, checkBox1.Checked));
-                        statusLabel.Text = "Downloading..." + Convert.ToString(postCount - i);
+                        label4.Text = Convert.ToString(postCount - i) + " left";
                     }
                     statusLabel.ForeColor = Color.Green;
                     statusLabel.Text = "Ready.";
+                    label4.Text = "";
                     MessageBox.Show("Download compelete!", "BooruDownloader", MessageBoxButtons.OK, MessageBoxIcon.None, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
                 }
             }
@@ -102,10 +104,11 @@ namespace BooruDownloader
                     for (int i = 0; i < postCount; i++)
                     {
                         await Task.Run(() => engine.downloadPosts(domainBox.Text, tagsBox.Text, i, checkBox1.Checked));
-                        statusLabel.Text = "Downloading..." + Convert.ToString(postCount - i);
+                        label4.Text = Convert.ToString(postCount - i) + " left";
                     }
                     statusLabel.ForeColor = Color.Green;
                     statusLabel.Text = "Ready.";
+                    label4.Text = "";
                     MessageBox.Show("Download compelete!", "BooruDownloader", MessageBoxButtons.OK, MessageBoxIcon.None, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
                 }
 
