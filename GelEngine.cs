@@ -19,6 +19,9 @@ namespace BooruDownloader
         XmlElement root;
         string url;
 
+        [DllImport("kernel32.dll", SetLastError = true)]
+        static extern bool AllocConsole();
+
         string ExtFromURL(string line)
         {
             var ext = "";
@@ -41,6 +44,8 @@ namespace BooruDownloader
         {
             using (WebClient wc = new WebClient())
             {
+                wc.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; " +
+                                  "Windows NT 5.2; .NET CLR 1.0.3705;)");
                 if (keepOriginalNames)
                     wc.DownloadFileAsync(new System.Uri(url), "./out/" + FnameFromURL(url));
                 else
@@ -52,7 +57,7 @@ namespace BooruDownloader
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(domain + "/index.php?page=dapi&s=post&q=index&limit=1&tags=" + tags);
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            //AllocConsole();
+            AllocConsole();
             string result = "";
             using (Stream stream = response.GetResponseStream())
             {
@@ -85,6 +90,7 @@ namespace BooruDownloader
 
                 url = root.Attributes["file_url"].Value;
                 tags = root.Attributes["tags"].Value;
+                Console.WriteLine(url);
                 downloadImage(url, tags, keepOriginalNames);
             }
             return url;

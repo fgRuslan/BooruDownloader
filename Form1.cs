@@ -73,9 +73,10 @@ namespace BooruDownloader
                 {
                     statusLabel.ForeColor = Color.Blue;
                     statusLabel.Text = "Downloading...";
-                    for (int i = 0; i < postCount; i++)
+                    for (int i = 1; i < postCount; i++)
                     {
                         await Task.Run(() => engine.downloadPosts(domainBox.Text, tagsBox.Text, i, checkBox1.Checked));
+                        statusLabel.Text = "Downloading..." + Convert.ToString(postCount - i);
                     }
                     statusLabel.ForeColor = Color.Green;
                     statusLabel.Text = "Ready.";
@@ -87,6 +88,7 @@ namespace BooruDownloader
 
                 GelEngine engine = new GelEngine();
                 int postCount = engine.getPostCount(domainBox.Text, tagsBox.Text);
+                Console.WriteLine(postCount);
                 if (postCount == 0)
                 {
                     Console.WriteLine("No posts found by tag " + tagsBox.Text);
@@ -100,6 +102,7 @@ namespace BooruDownloader
                     for (int i = 0; i < postCount; i++)
                     {
                         await Task.Run(() => engine.downloadPosts(domainBox.Text, tagsBox.Text, i, checkBox1.Checked));
+                        statusLabel.Text = "Downloading..." + Convert.ToString(postCount - i);
                     }
                     statusLabel.ForeColor = Color.Green;
                     statusLabel.Text = "Ready.";
