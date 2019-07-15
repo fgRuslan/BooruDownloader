@@ -62,6 +62,7 @@ namespace BooruDownloader
             if (isDanbooruSite.Checked){//If it's a danbooru site
                 DanEngine engine = new DanEngine();
                 int postCount = engine.getPostCount(domainBox.Text, tagsBox.Text);
+                Console.WriteLine(postCount);
                 if (postCount == 0)
                 {
                     Console.WriteLine("No posts found by tag " + tagsBox.Text);
