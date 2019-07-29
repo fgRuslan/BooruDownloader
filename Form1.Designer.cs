@@ -39,6 +39,7 @@
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.isDanbooruSite = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.ratingCheckBox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // tagsBox
@@ -136,11 +137,22 @@
             this.label4.TabIndex = 10;
             this.label4.Text = "label4";
             // 
+            // ratingCheckBox
+            // 
+            this.ratingCheckBox.AutoSize = true;
+            this.ratingCheckBox.Location = new System.Drawing.Point(155, 98);
+            this.ratingCheckBox.Name = "ratingCheckBox";
+            this.ratingCheckBox.Size = new System.Drawing.Size(216, 17);
+            this.ratingCheckBox.TabIndex = 11;
+            this.ratingCheckBox.Text = "Include rating in beginning of a file name";
+            this.ratingCheckBox.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(624, 137);
+            this.Controls.Add(this.ratingCheckBox);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.isDanbooruSite);
             this.Controls.Add(this.checkBox1);
@@ -172,6 +184,7 @@
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.CheckBox isDanbooruSite;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.CheckBox ratingCheckBox;
     }
 }
 

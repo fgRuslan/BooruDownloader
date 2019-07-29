@@ -76,7 +76,7 @@ namespace BooruDownloader
                     statusLabel.Text = "Downloading...";
                     for (int i = 1; i < postCount; i++)
                     {
-                        await Task.Run(() => engine.downloadPosts(domainBox.Text, tagsBox.Text, i, checkBox1.Checked));
+                        await Task.Run(() => engine.downloadPosts(domainBox.Text, tagsBox.Text, i, checkBox1.Checked, ratingCheckBox.Checked));
                         label4.Text = Convert.ToString(postCount - i) + " left";
                     }
                     statusLabel.ForeColor = Color.Green;
@@ -103,7 +103,7 @@ namespace BooruDownloader
                     statusLabel.Text = "Downloading...";
                     for (int i = 0; i < postCount; i++)
                     {
-                        await Task.Run(() => engine.downloadPosts(domainBox.Text, tagsBox.Text, i, checkBox1.Checked));
+                        await Task.Run(() => engine.downloadPosts(domainBox.Text, tagsBox.Text, i, checkBox1.Checked, ratingCheckBox.Checked));
                         label4.Text = Convert.ToString(postCount - i) + " left";
                     }
                     statusLabel.ForeColor = Color.Green;

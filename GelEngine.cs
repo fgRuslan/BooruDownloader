@@ -75,7 +75,7 @@ namespace BooruDownloader
             }
             return Convert.ToInt32(result);
         }
-        public string downloadPosts(string domain, string tags, int page, bool keepOriginalNames)
+        public string downloadPosts(string domain, string tags, int page, bool keepOriginalNames, bool includeRating)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(domain + "/index.php?page=dapi&s=post&q=index&limit=1&tags=" + tags + "&pid=" + page);
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
@@ -95,12 +95,15 @@ namespace BooruDownloader
                 tags = root.Attributes["tags"].Value;
                 rating = root.Attributes["rating"].Value;
                 var ratingstr = "";
-                if (rating == "q")
-                    ratingstr = "nsfw ";
-                if(rating == "e")
-                    ratingstr = "nsfw ";
-                if (rating == "s")
-                    ratingstr = "safe ";
+                if (includeRating)
+                {
+                    if (rating == "q")
+                        ratingstr = "nsfw ";
+                    if (rating == "e")
+                        ratingstr = "nsfw ";
+                    if (rating == "s")
+                        ratingstr = "safe ";
+                }
                 Console.WriteLine(url);
                 downloadImage(url, tags, keepOriginalNames, ratingstr);
             }
