@@ -38,16 +38,16 @@ namespace BooruDownloader
             return fname;
         }
 
-        private void downloadImage(string url, string tags, bool keepOriginalNames)
+        private void downloadImage(string url, string tags, bool keepOriginalNames, string ratingStr)
         {
             using (WebClient wc = new WebClient())
             {
                 wc.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; " +
                                   "Windows NT 5.2; .NET CLR 1.0.3705;)");
                 if (keepOriginalNames)
-                    wc.DownloadFileAsync(new System.Uri(url), "./out/" + FnameFromURL(url));
+                    wc.DownloadFileAsync(new System.Uri(url), "./out/" + ratingStr + FnameFromURL(url));
                 else
-                    wc.DownloadFileAsync(new System.Uri(url), "./out/" + tags + ExtFromURL(url));
+                    wc.DownloadFileAsync(new System.Uri(url), "./out/" + ratingStr + tags + ExtFromURL(url));
             }
         }
 
@@ -65,14 +65,23 @@ namespace BooruDownloader
                 XmlNode node = (XmlNode)doc.DocumentElement;
                 XmlNode sourceNode = node.SelectSingleNode("post/file-url");
                 XmlNode tagsNode = node.SelectSingleNode("post/tag-string");
+                XmlNode ratingNode = node.SelectSingleNode("post/rating");
                 if (sourceNode == null)
                 {
                     return "";
                 }
                 url = sourceNode.InnerXml;
                 var tagstring = tagsNode.InnerXml;
+                var rating = ratingNode.InnerXml;
+                var ratingstr = "";
+                if (rating == "q")
+                    ratingstr = "nsfw ";
+                if (rating == "e")
+                    ratingstr = "nsfw ";
+                if (rating == "s")
+                    ratingstr = "safe ";
                 Console.WriteLine(url);
-                downloadImage(url, tagstring, keepOriginalNames);
+                downloadImage(url, tagstring, keepOriginalNames, ratingstr);
             }
             return url;
         }

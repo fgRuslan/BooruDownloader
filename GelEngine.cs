@@ -18,6 +18,7 @@ namespace BooruDownloader
         XmlDocument doc = new XmlDocument();
         XmlElement root;
         string url;
+        string rating;
 
         [DllImport("kernel32.dll", SetLastError = true)]
         static extern bool AllocConsole();
@@ -40,16 +41,16 @@ namespace BooruDownloader
         }
 
 
-        private void downloadImage(string url, string tags, bool keepOriginalNames)
+        private void downloadImage(string url, string tags, bool keepOriginalNames, string rating)
         {
             using (WebClient wc = new WebClient())
             {
                 wc.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; " +
                                   "Windows NT 5.2; .NET CLR 1.0.3705;)");
                 if (keepOriginalNames)
-                    wc.DownloadFileAsync(new System.Uri(url), "./out/" + FnameFromURL(url));
+                    wc.DownloadFileAsync(new System.Uri(url), "./out/"+ rating + FnameFromURL(url));
                 else
-                    wc.DownloadFileAsync(new System.Uri(url), "./out/" + tags + ExtFromURL(url));
+                    wc.DownloadFileAsync(new System.Uri(url), "./out/"+ rating + tags + ExtFromURL(url));
             }
         }
 
@@ -92,8 +93,16 @@ namespace BooruDownloader
 
                 url = root.Attributes["file_url"].Value;
                 tags = root.Attributes["tags"].Value;
+                rating = root.Attributes["rating"].Value;
+                var ratingstr = "";
+                if (rating == "q")
+                    ratingstr = "nsfw ";
+                if(rating == "e")
+                    ratingstr = "nsfw ";
+                if (rating == "s")
+                    ratingstr = "safe ";
                 Console.WriteLine(url);
-                downloadImage(url, tags, keepOriginalNames);
+                downloadImage(url, tags, keepOriginalNames, ratingstr);
             }
             return url;
         }
