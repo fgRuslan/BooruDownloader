@@ -36,6 +36,8 @@ namespace BooruDownloader
             tagsBox.GotFocus += new EventHandler(this.TagsGotFocus);
             tagsBox.LostFocus += new EventHandler(this.TagsLostFocus);
             label4.Text = "";
+            this.MaximizeBox = false;
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
         }
 
         public void TagsGotFocus(object sender, EventArgs e)
