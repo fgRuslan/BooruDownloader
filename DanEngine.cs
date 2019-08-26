@@ -77,7 +77,7 @@ namespace BooruDownloader
                 if (includeRating)
                 {
                     if (rating == "q")
-                        ratingstr = "nsfw ";
+                        ratingstr = "questionable ";
                     if (rating == "e")
                         ratingstr = "nsfw ";
                     if (rating == "s")
