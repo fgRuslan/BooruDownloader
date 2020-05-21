@@ -24,7 +24,7 @@ namespace BooruDownloader
         string ExtFromURL(string line)
         {
             var ext = "";
-            var match = Regex.Match(line, "(?:)\\.[\\d\\w]+$");
+            var match = Regex.Match(line, "(?:)\\.[\\d\\w]+$", RegexOptions.Compiled);
             if (match.Success)
                 ext = match.Value;
             return ext;
@@ -32,7 +32,7 @@ namespace BooruDownloader
         string FnameFromURL(string line)
         {
             var fname = "";
-            var match = Regex.Match(line, "(?:)[\\d\\w]+\\.[\\d\\w]+$");
+            var match = Regex.Match(line, "(?:)[\\d\\w]+\\.[\\d\\w]+$", RegexOptions.Compiled);
             if (match.Success)
                 fname = match.Value;
             return fname;

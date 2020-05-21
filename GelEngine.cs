@@ -26,7 +26,7 @@ namespace BooruDownloader
         string ExtFromURL(string line)
         {
             var ext = "";
-            var match = Regex.Match(line, "(?:)\\.[\\d\\w]+$");
+            var match = Regex.Match(line, "(?:)\\.[\\d\\w]+$", RegexOptions.Compiled);
             if (match.Success)
                 ext = match.Value;
             return ext;
@@ -34,7 +34,7 @@ namespace BooruDownloader
         string FnameFromURL(string line)
         {
             var fname = "";
-            var match = Regex.Match(line, "(?:)[\\d\\w]+\\.[\\d\\w]+$");
+            var match = Regex.Match(line, "(?:)[\\d\\w]+\\.[\\d\\w]+$", RegexOptions.Compiled);
             if (match.Success)
                 fname = match.Value;
             return fname;
@@ -66,7 +66,7 @@ namespace BooruDownloader
             {
                 StreamReader reader = new StreamReader(stream, Encoding.UTF8);
                 String responseString = reader.ReadToEnd();
-                var match = Regex.Match(responseString, "count=\"([\\s\\S]+?)\" ");
+                var match = Regex.Match(responseString, "count=\"([\\s\\S]+?)\" ", RegexOptions.Compiled);
                 if (match.Success)
                 {
                     Console.WriteLine(match.Groups[1].Value + " posts found");
