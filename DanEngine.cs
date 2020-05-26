@@ -91,7 +91,13 @@ namespace BooruDownloader
 
         public int getPostCount(string domain, string tags)
         {
+            ServicePointManager.DefaultConnectionLimit = 9999;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12 | SecurityProtocolType.Ssl3;
+
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(domain + "/posts.xml?page=dapi&s=post&q=index&tags=" + tags);
+            request.Credentials = CredentialCache.DefaultCredentials;
+            request.UserAgent = "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)";
+            
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 #if DEBUG
             AllocConsole();
