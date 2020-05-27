@@ -116,5 +116,10 @@ namespace BooruDownloader
 
             }
         }
+
+        private void detectButton_Click(object sender, EventArgs e)
+        {
+            Detector.detectEngine(domainBox.Text);
+        }
     }
 }
