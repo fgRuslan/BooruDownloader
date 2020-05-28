@@ -80,6 +80,7 @@ namespace BooruDownloader
                     wc.DownloadFileAsync(new System.Uri(url), "./out/" + rating + FnameFromURL(url));
                 }
             }          
+
         }
 
         public int getPostCount(string domain, string tags)
