@@ -125,6 +125,9 @@ namespace BooruDownloader
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(domain + "/posts.xml?page=dapi&s=post&q=index&tags=" + tags);
+            request.Credentials = CredentialCache.DefaultCredentials;
+            request.UserAgent = "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)";
+            
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 #if DEBUG
             AllocConsole();

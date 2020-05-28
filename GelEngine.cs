@@ -27,7 +27,7 @@ namespace BooruDownloader
         string ExtFromURL(string line)
         {
             var ext = "";
-            var match = Regex.Match(line, "(?:)\\.[\\d\\w]+$", RegexOptions.Compiled);
+            var match = Regex.Match(line, @"(?<=\.)[^.]+$", RegexOptions.Compiled);
             if (match.Success)
                 ext = match.Value;
             return ext;
@@ -35,7 +35,7 @@ namespace BooruDownloader
         string FnameFromURL(string line)
         {
             var fname = "";
-            var match = Regex.Match(line, "(?:)[\\d\\w]+\\.[\\d\\w]+$", RegexOptions.Compiled);
+            var match = Regex.Match(line, @"([^\/.]+)\.[^.]*$", RegexOptions.Compiled);
             if (match.Success)
                 fname = match.Value;
             return fname;
@@ -84,7 +84,12 @@ namespace BooruDownloader
 
         public int getPostCount(string domain, string tags)
         {
+            ServicePointManager.DefaultConnectionLimit = 9999;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12 | SecurityProtocolType.Ssl3;
+
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(domain + "/index.php?page=dapi&s=post&q=index&limit=1&tags=" + tags);
+            request.UserAgent = ".NET Framework Test Client";
+            request.Accept = "text/xml";
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 #if DEBUG
             AllocConsole();
@@ -105,6 +110,9 @@ namespace BooruDownloader
         }
         public string downloadPosts(string domain, string tags, int page, bool keepOriginalNames, bool includeRating)
         {
+            ServicePointManager.DefaultConnectionLimit = 9999;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12 | SecurityProtocolType.Ssl3;
+
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(domain + "/index.php?page=dapi&s=post&q=index&limit=1&tags=" + tags + "&pid=" + page);
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             using (Stream stream = response.GetResponseStream())
