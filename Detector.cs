@@ -20,6 +20,10 @@ namespace BooruDownloader
 
         public static String detectEngine(String url)
         {
+            if (url.StartsWith("http://"))
+                url = url.Substring(7);
+            if (url.StartsWith("https://"))
+                url = url.Substring(8);
             foreach (var pair in engines)
             {
                 if(url.StartsWith(pair.Key))

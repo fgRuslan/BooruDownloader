@@ -46,7 +46,7 @@ namespace BooruDownloader
             toolTip1.ReshowDelay = 250;
             // Force the ToolTip text to be displayed whether or not the form is active.
             toolTip1.ShowAlways = true;
-            toolTip1.SetToolTip(this.checkBox1, "It's better to keep this checkbox checked as if it's not, you may not be able to download everything successfully");
+            toolTip1.SetToolTip(this.detectButton, "Click here if you don't know what engine does the selected website uses. Keep in mind that engine detection feature is experimental.");
         }
 
         public void TagsGotFocus(object sender, EventArgs e)
@@ -128,7 +128,16 @@ namespace BooruDownloader
 
         private void detectButton_Click(object sender, EventArgs e)
         {
-            Detector.detectEngine(domainBox.Text);
+            string engine = Detector.detectEngine(domainBox.Text);
+            switch (engine)
+            {
+                case "Dan":
+                    isDanbooruSite.Checked = true;
+                break;
+                case "Gel":
+                    isDanbooruSite.Checked = false;
+                break;
+            }
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)

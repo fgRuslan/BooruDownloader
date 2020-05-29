@@ -155,7 +155,7 @@
             this.detectButton.Name = "detectButton";
             this.detectButton.Size = new System.Drawing.Size(75, 23);
             this.detectButton.TabIndex = 12;
-            this.detectButton.Text = "button1";
+            this.detectButton.Text = "Detect";
             this.detectButton.UseVisualStyleBackColor = true;
             this.detectButton.Click += new System.EventHandler(this.detectButton_Click);
             // 
