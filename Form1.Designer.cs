@@ -41,6 +41,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.ratingCheckBox = new System.Windows.Forms.CheckBox();
             this.detectButton = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.limitBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // tagsBox
@@ -159,11 +161,29 @@
             this.detectButton.UseVisualStyleBackColor = true;
             this.detectButton.Click += new System.EventHandler(this.detectButton_Click);
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(413, 80);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(81, 13);
+            this.label5.TabIndex = 13;
+            this.label5.Text = "Download limit: ";
+            // 
+            // limitBox
+            // 
+            this.limitBox.Location = new System.Drawing.Point(500, 77);
+            this.limitBox.Name = "limitBox";
+            this.limitBox.Size = new System.Drawing.Size(47, 20);
+            this.limitBox.TabIndex = 14;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(624, 137);
+            this.Controls.Add(this.limitBox);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.detectButton);
             this.Controls.Add(this.ratingCheckBox);
             this.Controls.Add(this.label4);
@@ -199,6 +219,8 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.CheckBox ratingCheckBox;
         private System.Windows.Forms.Button detectButton;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox limitBox;
     }
 }
 

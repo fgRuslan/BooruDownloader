@@ -21,6 +21,8 @@ namespace BooruDownloader
     {
         [DllImport("kernel32.dll", SetLastError = true)]
         static extern bool AllocConsole();
+
+        int alreadyDownloaded = 0;
         
         public Form1()
         {
@@ -71,6 +73,7 @@ namespace BooruDownloader
 
         private async void downloadButton_Click(object sender, EventArgs e)
         {
+            alreadyDownloaded = 0;
             if (isDanbooruSite.Checked){//If it's a danbooru site
                 DanEngine engine = new DanEngine();
                 int postCount = engine.getPostCount(domainBox.Text, tagsBox.Text);
@@ -85,10 +88,25 @@ namespace BooruDownloader
                 {
                     statusLabel.ForeColor = Color.Blue;
                     statusLabel.Text = "Downloading...";
+
+                    int limitBoxText;
+                    try
+                    {
+                        limitBoxText = int.Parse(limitBox.Text);
+                    }
+                    catch (Exception e1)
+                    {
+                        limitBox.Text = "999";
+                        limitBoxText = 999;
+                    }
                     for (int i = 1; i < postCount; i++)
                     {
-                        await Task.Run(() => engine.downloadPosts(domainBox.Text, tagsBox.Text, i, checkBox1.Checked, ratingCheckBox.Checked));
-                        label4.Text = Convert.ToString(postCount - i) + " left";
+                        if (alreadyDownloaded <= limitBoxText)
+                        {
+                            await Task.Run(() => engine.downloadPosts(domainBox.Text, tagsBox.Text, i, checkBox1.Checked, ratingCheckBox.Checked));
+                            label4.Text = Convert.ToString(postCount - i) + " left";
+                            alreadyDownloaded++;
+                        }
                     }
                     statusLabel.ForeColor = Color.Green;
                     statusLabel.Text = "Ready.";
@@ -112,10 +130,25 @@ namespace BooruDownloader
                 {
                     statusLabel.ForeColor = Color.Blue;
                     statusLabel.Text = "Downloading...";
+
+                    int limitBoxText;
+                    try
+                    {
+                        limitBoxText = int.Parse(limitBox.Text);
+                    }
+                    catch (Exception e1)
+                    {
+                        limitBox.Text = "999";
+                        limitBoxText = 999;
+                    }
                     for (int i = 0; i < postCount; i++)
                     {
-                        await Task.Run(() => engine.downloadPosts(domainBox.Text, tagsBox.Text, i, checkBox1.Checked, ratingCheckBox.Checked));
-                        label4.Text = Convert.ToString(postCount - i) + " left";
+                        if (alreadyDownloaded <= limitBoxText)
+                        {
+                            await Task.Run(() => engine.downloadPosts(domainBox.Text, tagsBox.Text, i, checkBox1.Checked, ratingCheckBox.Checked));
+                            label4.Text = Convert.ToString(postCount - i) + " left";
+                            alreadyDownloaded++;
+                        }
                     }
                     statusLabel.ForeColor = Color.Green;
                     statusLabel.Text = "Ready.";
