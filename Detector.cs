@@ -6,30 +6,34 @@ using System.Threading.Tasks;
 
 namespace BooruDownloader
 {
+    public abstract class engineBase
+    {
+        List<string> hostsContainer = new List<string>();
+        public string host { get { return hostsContainer[0]; } set { hostsContainer.Add(value); }  }
+        public abstract EngineBase GenEngine();
+
+        public bool chkHost(string host)
+            => hostsContainer.Contains(host);
+    }
+
+    public class danEngine : engineBase
+    {
+        public danEngine() { host = "danbooru.donmai.us";  host = "danbooru.donmai.us"; }
+
+        public override EngineBase GenEngine()
+            => new DanEngine();
+    }
+    public class gelEngine : engineBase
+    {
+        public gelEngine() { host = "rule34.xxx"; host = "safebooru.org"; host = "gelbooru.org" }
+
+        public override EngineBase GenEngine()
+            => new GelEngine();
+    }
     class Detector
     {
-
-        static Dictionary<string, string> engines = new Dictionary<string, string>
-        {
-            {"safebooru.org", "Gel"},
-            {"safebooru.donmai.us", "Dan"},
-            {"danbooru.donmai.us", "Dan"},
-            {"gelbooru.org", "Gel"},
-            {"rule34.xxx", "Gel"}
-        };
-
-        public static String detectEngine(String url)
-        {
-            if (url.StartsWith("http://"))
-                url = url.Substring(7);
-            if (url.StartsWith("https://"))
-                url = url.Substring(8);
-            foreach (var pair in engines)
-            {
-                if(url.StartsWith(pair.Key))
-                    return pair.Value;
-            }
-            return "";
-        }
+        public static engineBase[] engines = new engineBase[] { new gelEngine(), new danEngine() };
+        public static EngineBase detectEngine(String url)
+            => engines.First(x => x.chkHost(url)).GenEngine();
     }
 }

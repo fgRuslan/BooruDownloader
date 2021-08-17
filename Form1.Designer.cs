@@ -37,7 +37,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.statusLabel = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.isDanbooruSite = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
             this.ratingCheckBox = new System.Windows.Forms.CheckBox();
             this.detectButton = new System.Windows.Forms.Button();
@@ -120,16 +119,6 @@
             this.checkBox1.UseVisualStyleBackColor = true;
             this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
-            // isDanbooruSite
-            // 
-            this.isDanbooruSite.AutoSize = true;
-            this.isDanbooruSite.Location = new System.Drawing.Point(283, 21);
-            this.isDanbooruSite.Name = "isDanbooruSite";
-            this.isDanbooruSite.Size = new System.Drawing.Size(73, 17);
-            this.isDanbooruSite.TabIndex = 9;
-            this.isDanbooruSite.Text = "Danbooru";
-            this.isDanbooruSite.UseVisualStyleBackColor = true;
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -159,7 +148,7 @@
             this.detectButton.TabIndex = 12;
             this.detectButton.Text = "Detect";
             this.detectButton.UseVisualStyleBackColor = true;
-            this.detectButton.Click += new System.EventHandler(this.detectButton_Click);
+
             // 
             // label5
             // 
@@ -187,7 +176,6 @@
             this.Controls.Add(this.detectButton);
             this.Controls.Add(this.ratingCheckBox);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.isDanbooruSite);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.statusLabel);
             this.Controls.Add(this.label3);
@@ -215,7 +203,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label statusLabel;
         private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.CheckBox isDanbooruSite;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.CheckBox ratingCheckBox;
         private System.Windows.Forms.Button detectButton;
