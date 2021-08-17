@@ -25,7 +25,7 @@ namespace BooruDownloader
     }
     public class gelEngine : engineBase
     {
-        public gelEngine() { host = "rule34.xxx"; host = "safebooru.org"; host = "gelbooru.org" }
+        public gelEngine() { host = "rule34.xxx"; host = "safebooru.org"; host = "gelbooru.org"; }
 
         public override EngineBase GenEngine()
             => new GelEngine();
