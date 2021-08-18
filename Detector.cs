@@ -34,6 +34,28 @@ namespace BooruDownloader
     {
         public static engineBase[] engines = new engineBase[] { new gelEngine(), new danEngine() };
         public static EngineBase detectEngine(String url)
-            => engines.First(x => x.chkHost(url)).GenEngine();
+            => engines.First(x => x.chkHost(gHost(url))).GenEngine();
+        
+        private string gHost(string uri)
+        {
+            for (int idx = 0; idx < uri.Length; idx++)
+                if (char.Equals(uri[idx], '/') && char.Equals(uri[idx + 1], '/'))
+                    return LoopUntilSlash(uri, idx + 2);
+            return LoopUntilSlash(uri, 0);
+        }
+
+        private string LoopUntilSlash(string l, int idx)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.Capacity = l.Length;
+            for (int i = idx; i < l.Length; i++)
+            {
+                if (!char.Equals(l[i], '/'))
+                    builder.Append(l[i]);
+                else
+                    return builder.ToString();
+            }
+            return builder.ToString();
+        }
     }
 }
