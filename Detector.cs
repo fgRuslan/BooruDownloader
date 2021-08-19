@@ -13,30 +13,32 @@ namespace BooruDownloader
         public abstract EngineBase GenEngine();
 
         public bool chkHost(string host)
-            => hostsContainer.Contains(host);
+            { return hostsContainer.Contains(host);}
     }
 
     public class danEngine : engineBase
     {
-        public danEngine() { host = "danbooru.donmai.us";  host = "danbooru.donmai.us"; }
+        public danEngine() { host = "danbooru.donmai.us"; host = "safebooru.donmai.us"; }
 
         public override EngineBase GenEngine()
-            => new DanEngine();
+            { return new DanEngine();}
     }
     public class gelEngine : engineBase
     {
-        public gelEngine() { host = "rule34.xxx"; host = "safebooru.org"; host = "gelbooru.org"; }
+        public gelEngine() { host = "rule34.xxx"; host = "safebooru.org"; host = "gelbooru.com"; }
 
         public override EngineBase GenEngine()
-            => new GelEngine();
+        { return new GelEngine(); }
     }
     class Detector
     {
         public static engineBase[] engines = new engineBase[] { new gelEngine(), new danEngine() };
         public static EngineBase detectEngine(String url)
-            => engines.First(x => x.chkHost(gHost(url))).GenEngine();
+        {
+            return engines.First(x => x.chkHost(gHost(url))).GenEngine();
+        }
         
-        private string gHost(string uri)
+        private static string gHost(string uri)
         {
             for (int idx = 0; idx < uri.Length; idx++)
                 if (char.Equals(uri[idx], '/') && char.Equals(uri[idx + 1], '/'))
@@ -44,7 +46,7 @@ namespace BooruDownloader
             return LoopUntilSlash(uri, 0);
         }
 
-        private string LoopUntilSlash(string l, int idx)
+        private static string LoopUntilSlash(string l, int idx)
         {
             StringBuilder builder = new StringBuilder();
             builder.Capacity = l.Length;
