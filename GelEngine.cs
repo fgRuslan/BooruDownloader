@@ -15,6 +15,11 @@ namespace BooruDownloader
 {
     class GelEngine : EngineBase
     {
+        public override type getType()
+        {
+            return type.GEL;
+        }
+
         public override string ExtFromURL(string line)
         {
             var ext = "";

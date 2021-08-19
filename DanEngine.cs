@@ -15,6 +15,11 @@ namespace BooruDownloader
 {
     class DanEngine : EngineBase
     {
+        public override type getType()
+        {
+            return type.DAN;
+        }
+
         public override string ExtFromURL(string line)
         {
             var ext = "";
@@ -53,8 +58,8 @@ namespace BooruDownloader
 
             using (WebClient wc = new WebClient())
             {
-                wc.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; " +
-                                      "Windows NT 5.2; .NET CLR 1.0.3705;)");
+               // wc.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; " +
+                //                      "Windows NT 5.2; .NET CLR 1.0.3705;)");
                 try
                 {
                     if (keepOriginalNames)
@@ -120,7 +125,7 @@ namespace BooruDownloader
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(domain + "/posts.xml?page=dapi&s=post&q=index&tags=" + tags);
             request.Credentials = CredentialCache.DefaultCredentials;
-            request.UserAgent = "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)";
+            //request.UserAgent = "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)";
             
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 #if DEBUG

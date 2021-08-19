@@ -15,6 +15,12 @@ namespace BooruDownloader
         public string url;
         public string rating;
 
+        public enum type
+        {
+            DAN=0,
+            GEL=1,
+        };
+
         [DllImport("kernel32.dll", SetLastError = true)]
         public static extern bool AllocConsole();
 
@@ -24,5 +30,6 @@ namespace BooruDownloader
         public abstract void downloadImage(string url, string tags, bool keepOrigName, string rating);
         public abstract string downloadPosts(string url, string tags, int page, bool keepOrigName, bool inclRating);
         public abstract int getPostCount(string domain, string tags);
+        public abstract type getType();
     }
 }

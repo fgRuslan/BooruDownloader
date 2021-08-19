@@ -23,7 +23,7 @@ namespace BooruDownloader
         static extern bool AllocConsole();
 
         int alreadyDownloaded = 0;
-        
+
         public Form1()
         {
             InitializeComponent();
@@ -32,7 +32,7 @@ namespace BooruDownloader
         private void Form1_Load(object sender, EventArgs e)
         {
             bool exists = System.IO.Directory.Exists("./out/");
-            if(!exists)
+            if (!exists)
                 System.IO.Directory.CreateDirectory("./out/");
 
             tagsBox.GotFocus += new EventHandler(this.TagsGotFocus);
@@ -77,6 +77,13 @@ namespace BooruDownloader
         private async void downloadButton_Click(object sender, EventArgs e)
         {
             EngineBase engine = Detector.detectEngine(domainBox.Text);
+            if (engine == null)
+            {
+                if (isDanbooruSite.Checked == true)
+                    engine = new DanEngine();
+                else
+                    engine = new GelEngine();
+            }
             int postCount = engine.getPostCount(domainBox.Text, tagsBox.Text);
             Console.WriteLine(postCount);
             if (postCount == 0)
@@ -119,6 +126,20 @@ namespace BooruDownloader
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void detectButton_Click(object sender, EventArgs e)
+        {
+            EngineBase.type engine = Detector.detectEngine(domainBox.Text).getType();
+            switch (engine)
+            {
+                case EngineBase.type.DAN:
+                    isDanbooruSite.Checked = true;
+                    break;
+                case EngineBase.type.GEL:
+                    isDanbooruSite.Checked = false;
+                    break;
+            }
         }
     }
 }
