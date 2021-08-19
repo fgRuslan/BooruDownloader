@@ -14,7 +14,6 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Xml;
 
-
 namespace BooruDownloader
 {
     public partial class Form1 : Form
