@@ -49,6 +49,9 @@ namespace BooruDownloader
             // Force the ToolTip text to be displayed whether or not the form is active.
             toolTip1.ShowAlways = true;
             toolTip1.SetToolTip(this.detectButton, "Click here if you don't know what engine does the selected website uses. Keep in mind that engine detection feature is experimental.");
+#if DEBUG
+            AllocConsole();
+#endif
         }
 
         public void TagsGotFocus(object sender, EventArgs e)

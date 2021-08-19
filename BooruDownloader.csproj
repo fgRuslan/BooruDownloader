@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="DanEngine.cs" />
     <Compile Include="Detector.cs" />
+    <Compile Include="EngineBase.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
