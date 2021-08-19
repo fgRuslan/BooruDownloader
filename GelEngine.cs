@@ -11,25 +11,20 @@ using System.Text.RegularExpressions;
 using System.Xml;
 using System.Windows.Forms;
 
-namespace BooruDownloader
-{
-    class GelEngine : EngineBase
-    {
-        public override type getType()
-        {
+namespace BooruDownloader {
+    class GelEngine: EngineBase {
+        public override type getType() {
             return type.GEL;
         }
 
-        public override string ExtFromURL(string line)
-        {
+        public override string ExtFromURL(string line) {
             var ext = "";
             var match = Regex.Match(line, @"(?<=\.)[^.]+$", RegexOptions.Compiled);
             if (match.Success)
                 ext = match.Value;
             return ext;
         }
-        public override string FnameFromURL(string line)
-        {
+        public override string FnameFromURL(string line) {
             var fname = "";
             var match = Regex.Match(line, @"([^\/.]+)\.[^.]*$", RegexOptions.Compiled);
             if (match.Success)
@@ -37,14 +32,11 @@ namespace BooruDownloader
             return fname;
         }
 
-
-        public override string Truncate(string value, int maxChars)
-        {
+        public override string Truncate(string value, int maxChars) {
             return value.Length <= maxChars ? value : value.Substring(0, maxChars) + "...";
         }
 
-        public override async void downloadImage(string url, string tags, bool keepOriginalNames, string rating)
-        {
+        public override async void downloadImage(string url, string tags, bool keepOriginalNames, string rating) {
             //I don't know what is this shit!
             string fullpath = "./out/" + rating + tags + ExtFromURL(url);
             string regexSearch = new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars());
@@ -57,63 +49,54 @@ namespace BooruDownloader
                 fullpath = Truncate(fullpath, 259 - shortPath.Length - 4);
             fullpath = fullpath.Substring(5);
 
-            using (WebClient wc = new WebClient())
-            {
+            using(WebClient wc = new WebClient()) {
                 wc.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; " +
-                                      "Windows NT 5.2; .NET CLR 1.0.3705;)");
-                try
-                {
+                    "Windows NT 5.2; .NET CLR 1.0.3705;)");
+                try {
                     if (keepOriginalNames)
                         wc.DownloadFileAsync(new System.Uri(url), "./out/" + rating + FnameFromURL(url));
                     else
                         await wc.DownloadFileTaskAsync(new System.Uri(url), "./out/" + fullpath + extension);
-                }
-                catch (Exception ex)
-                {
-#if DEBUG
+                } catch (Exception ex) {
+                    #if DEBUG
                     MessageBox.Show(ex.ToString(), ex.GetType().ToString());
-#endif
+                    #endif
                     wc.DownloadFileAsync(new System.Uri(url), "./out/" + rating + FnameFromURL(url));
                 }
-            }          
+            }
 
         }
 
-        public override int getPostCount(string domain, string tags)
-        {
+        public override int getPostCount(string domain, string tags) {
             ServicePointManager.DefaultConnectionLimit = 9999;
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12 | SecurityProtocolType.Ssl3;
 
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(domain + "/index.php?page=dapi&s=post&q=index&limit=1&tags=" + tags);
+            HttpWebRequest request = (HttpWebRequest) WebRequest.Create(domain + "/index.php?page=dapi&s=post&q=index&limit=1&tags=" + tags);
             request.UserAgent = ".NET Framework Test Client";
             request.Accept = "text/xml";
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-#if DEBUG
+            HttpWebResponse response = (HttpWebResponse) request.GetResponse();
+            #if DEBUG
             AllocConsole();
-#endif
+            #endif
             string result = "";
-            using (Stream stream = response.GetResponseStream())
-            {
+            using(Stream stream = response.GetResponseStream()) {
                 StreamReader reader = new StreamReader(stream, Encoding.UTF8);
                 String responseString = reader.ReadToEnd();
                 var match = Regex.Match(responseString, "count=\"([\\s\\S]+?)\" ", RegexOptions.Compiled);
-                if (match.Success)
-                {
+                if (match.Success) {
                     Console.WriteLine(match.Groups[1].Value + " posts found");
                     result = match.Groups[1].Value;
                 }
             }
             return Convert.ToInt32(result);
         }
-        public override string downloadPosts(string domain, string tags, int page, bool keepOriginalNames, bool includeRating)
-        {
+        public override string downloadPosts(string domain, string tags, int page, bool keepOriginalNames, bool includeRating) {
             ServicePointManager.DefaultConnectionLimit = 9999;
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12 | SecurityProtocolType.Ssl3;
 
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(domain + "/index.php?page=dapi&s=post&q=index&limit=1&tags=" + tags + "&pid=" + page);
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            using (Stream stream = response.GetResponseStream())
-            {
+            HttpWebRequest request = (HttpWebRequest) WebRequest.Create(domain + "/index.php?page=dapi&s=post&q=index&limit=1&tags=" + tags + "&pid=" + page);
+            HttpWebResponse response = (HttpWebResponse) request.GetResponse();
+            using(Stream stream = response.GetResponseStream()) {
                 StreamReader reader = new StreamReader(stream, Encoding.UTF8);
                 String responseString = reader.ReadToEnd();
 
@@ -128,8 +111,7 @@ namespace BooruDownloader
                 tags = root.Attributes["tags"].Value;
                 rating = root.Attributes["rating"].Value;
                 var ratingstr = "";
-                if (includeRating)
-                {
+                if (includeRating) {
                     if (rating == "q")
                         ratingstr = "questionable ";
                     if (rating == "e")

@@ -9,35 +9,62 @@ namespace BooruDownloader
     public abstract class engineBase
     {
         List<string> hostsContainer = new List<string>();
-        public string host { get { return hostsContainer[0]; } set { hostsContainer.Add(value); }  }
+        public string host
+        {
+            get
+            {
+                return hostsContainer[0];
+            }
+            set
+            {
+                hostsContainer.Add(value);
+            }
+        }
         public abstract EngineBase GenEngine();
 
-        public bool chkHost(string host)
-            { return hostsContainer.Contains(host);}
+        public bool CheckHost(string host)
+        {
+            return hostsContainer.Contains(host);
+        }
     }
 
     public class danEngine : engineBase
     {
-        public danEngine() { host = "danbooru.donmai.us"; host = "safebooru.donmai.us"; }
+        public danEngine()
+        {
+            host = "danbooru.donmai.us";
+            host = "safebooru.donmai.us";
+        }
 
         public override EngineBase GenEngine()
-            { return new DanEngine();}
+        {
+            return new DanEngine();
+        }
     }
     public class gelEngine : engineBase
     {
-        public gelEngine() { host = "rule34.xxx"; host = "safebooru.org"; host = "gelbooru.com"; }
+        public gelEngine()
+        {
+            host = "rule34.xxx";
+            host = "safebooru.org";
+            host = "gelbooru.com";
+        }
 
         public override EngineBase GenEngine()
-        { return new GelEngine(); }
+        {
+            return new GelEngine();
+        }
     }
     class Detector
     {
-        public static engineBase[] engines = new engineBase[] { new gelEngine(), new danEngine() };
+        public static engineBase[] engines = new engineBase[] {
+            new gelEngine(), new danEngine()
+        };
         public static EngineBase detectEngine(String url)
         {
             try
             {
-                return engines.First(x => x.chkHost(gHost(url))).GenEngine();
+                return engines.First(x => x.CheckHost(GetHost(url))).GenEngine();
             }
             catch (Exception e)
             {
@@ -45,8 +72,8 @@ namespace BooruDownloader
                 return null;
             }
         }
-        
-        private static string gHost(string uri)
+
+        private static string GetHost(string uri)
         {
             for (int idx = 0; idx < uri.Length; idx++)
                 if (char.Equals(uri[idx], '/') && char.Equals(uri[idx + 1], '/'))

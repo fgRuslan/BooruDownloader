@@ -17,8 +17,8 @@ namespace BooruDownloader
 
         public enum type
         {
-            DAN=0,
-            GEL=1,
+            DAN = 0,
+            GEL = 1,
         };
 
         [DllImport("kernel32.dll", SetLastError = true)]
