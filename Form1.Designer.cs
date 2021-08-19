@@ -42,6 +42,7 @@
             this.detectButton = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.limitBox = new System.Windows.Forms.TextBox();
+            this.isDanbooruSite = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // tagsBox
@@ -148,7 +149,7 @@
             this.detectButton.TabIndex = 12;
             this.detectButton.Text = "Detect";
             this.detectButton.UseVisualStyleBackColor = true;
-
+            this.detectButton.Click += new System.EventHandler(this.detectButton_Click);
             // 
             // label5
             // 
@@ -166,11 +167,22 @@
             this.limitBox.Size = new System.Drawing.Size(47, 20);
             this.limitBox.TabIndex = 14;
             // 
+            // isDanbooruSite
+            // 
+            this.isDanbooruSite.AutoSize = true;
+            this.isDanbooruSite.Location = new System.Drawing.Point(283, 21);
+            this.isDanbooruSite.Name = "isDanbooruSite";
+            this.isDanbooruSite.Size = new System.Drawing.Size(73, 17);
+            this.isDanbooruSite.TabIndex = 9;
+            this.isDanbooruSite.Text = "Danbooru";
+            this.isDanbooruSite.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(624, 137);
+            this.Controls.Add(this.isDanbooruSite);
             this.Controls.Add(this.limitBox);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.detectButton);
@@ -208,6 +220,7 @@
         private System.Windows.Forms.Button detectButton;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox limitBox;
+        private System.Windows.Forms.CheckBox isDanbooruSite;
     }
 }
 

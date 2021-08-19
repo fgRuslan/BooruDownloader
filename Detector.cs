@@ -35,7 +35,15 @@ namespace BooruDownloader
         public static engineBase[] engines = new engineBase[] { new gelEngine(), new danEngine() };
         public static EngineBase detectEngine(String url)
         {
-            return engines.First(x => x.chkHost(gHost(url))).GenEngine();
+            try
+            {
+                return engines.First(x => x.chkHost(gHost(url))).GenEngine();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return null;
+            }
         }
         
         private static string gHost(string uri)
