@@ -73,103 +73,43 @@ namespace BooruDownloader
 
         private async void downloadButton_Click(object sender, EventArgs e)
         {
-            alreadyDownloaded = 0;
-            if (isDanbooruSite.Checked){//If it's a danbooru site
-                DanEngine engine = new DanEngine();
-                int postCount = engine.getPostCount(domainBox.Text, tagsBox.Text);
-                Console.WriteLine(postCount);
-                if (postCount == 0)
-                {
-                    Console.WriteLine("No posts found by tag " + tagsBox.Text);
-                    statusLabel.ForeColor = Color.Red;
-                    statusLabel.Text = "No posts found.";
-                }
-                else
-                {
-                    statusLabel.ForeColor = Color.Blue;
-                    statusLabel.Text = "Downloading...";
-
-                    int limitBoxText;
-                    try
-                    {
-                        limitBoxText = int.Parse(limitBox.Text);
-                    }
-                    catch (Exception e1)
-                    {
-                        limitBox.Text = "999";
-                        limitBoxText = 999;
-                    }
-                    for (int i = 1; i < postCount; i++)
-                    {
-                        if (alreadyDownloaded <= limitBoxText)
-                        {
-                            await Task.Run(() => engine.downloadPosts(domainBox.Text, tagsBox.Text, i, checkBox1.Checked, ratingCheckBox.Checked));
-                            label4.Text = Convert.ToString(postCount - i) + " left";
-                            alreadyDownloaded++;
-                        }
-                    }
-                    statusLabel.ForeColor = Color.Green;
-                    statusLabel.Text = "Ready.";
-                    label4.Text = "";
-                    MessageBox.Show("Download compelete!", "BooruDownloader", MessageBoxButtons.OK, MessageBoxIcon.None, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
-                }
+            EngineBase engine = Detector.detectEngine(domainBox.Text);
+            int postCount = engine.getPostCount(domainBox.Text, tagsBox.Text);
+            Console.WriteLine(postCount);
+            if (postCount == 0)
+            {
+                Console.WriteLine("No posts found by tag " + tagsBox.Text);
+                statusLabel.ForeColor = Color.Red;
+                statusLabel.Text = "No posts found.";
             }
             else
-            {//If it's a gelbooru site
-
-                GelEngine engine = new GelEngine();
-                int postCount = engine.getPostCount(domainBox.Text, tagsBox.Text);
-                Console.WriteLine(postCount);
-                if (postCount == 0)
-                {
-                    Console.WriteLine("No posts found by tag " + tagsBox.Text);
-                    statusLabel.ForeColor = Color.Red;
-                    statusLabel.Text = "No posts found.";
-                }
-                else
-                {
-                    statusLabel.ForeColor = Color.Blue;
-                    statusLabel.Text = "Downloading...";
-
-                    int limitBoxText;
-                    try
-                    {
-                        limitBoxText = int.Parse(limitBox.Text);
-                    }
-                    catch (Exception e1)
-                    {
-                        limitBox.Text = "999";
-                        limitBoxText = 999;
-                    }
-                    for (int i = 0; i < postCount; i++)
-                    {
-                        if (alreadyDownloaded <= limitBoxText)
-                        {
-                            await Task.Run(() => engine.downloadPosts(domainBox.Text, tagsBox.Text, i, checkBox1.Checked, ratingCheckBox.Checked));
-                            label4.Text = Convert.ToString(postCount - i) + " left";
-                            alreadyDownloaded++;
-                        }
-                    }
-                    statusLabel.ForeColor = Color.Green;
-                    statusLabel.Text = "Ready.";
-                    label4.Text = "";
-                    MessageBox.Show("Download compelete!", "BooruDownloader", MessageBoxButtons.OK, MessageBoxIcon.None, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
-                }
-
-            }
-        }
-
-        private void detectButton_Click(object sender, EventArgs e)
-        {
-            string engine = Detector.detectEngine(domainBox.Text);
-            switch (engine)
             {
-                case "Dan":
-                    isDanbooruSite.Checked = true;
-                break;
-                case "Gel":
-                    isDanbooruSite.Checked = false;
-                break;
+                statusLabel.ForeColor = Color.Blue;
+                statusLabel.Text = "Downloading...";
+
+                int limitBoxText;
+                try
+                {
+                    limitBoxText = int.Parse(limitBox.Text);
+                }
+                catch (Exception e1)
+                {
+                    limitBox.Text = "999";
+                    limitBoxText = 999;
+                }
+                for (int i = 1; i < postCount; i++)
+                {
+                    if (alreadyDownloaded <= limitBoxText)
+                    {
+                        await Task.Run(() => engine.downloadPosts(domainBox.Text, tagsBox.Text, i, checkBox1.Checked, ratingCheckBox.Checked));
+                        label4.Text = Convert.ToString(postCount - i) + " left";
+                        alreadyDownloaded++;
+                    }
+                }
+                statusLabel.ForeColor = Color.Green;
+                statusLabel.Text = "Ready.";
+                label4.Text = "";
+                MessageBox.Show("Download compelete!", "BooruDownloader", MessageBoxButtons.OK, MessageBoxIcon.None, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
             }
         }
 

@@ -13,16 +13,9 @@ using System.Windows.Forms;
 
 namespace BooruDownloader
 {
-    class DanEngine
+    class DanEngine : EngineBase
     {
-        XmlDocument doc = new XmlDocument();
-        XmlElement root;
-        string url;
-
-        [DllImport("kernel32.dll", SetLastError = true)]
-        static extern bool AllocConsole();
-
-        string ExtFromURL(string line)
+        public override string ExtFromURL(string line)
         {
             var ext = "";
             var match = Regex.Match(line, "(?:)\\.[\\d\\w]+$", RegexOptions.Compiled);
@@ -30,7 +23,7 @@ namespace BooruDownloader
                 ext = match.Value;
             return ext;
         }
-        string FnameFromURL(string line)
+        public override string FnameFromURL(string line)
         {
             var fname = "";
             var match = Regex.Match(line, "(?:)[\\d\\w]+\\.[\\d\\w]+$", RegexOptions.Compiled);
@@ -39,12 +32,12 @@ namespace BooruDownloader
             return fname;
         }
 
-        string Truncate(string value, int maxChars)
+        public override string Truncate(string value, int maxChars)
         {
             return value.Length <= maxChars ? value : value.Substring(0, maxChars) + "...";
         }
 
-        private async void downloadImage(string url, string tags, bool keepOriginalNames, string rating)
+        public override async void downloadImage(string url, string tags, bool keepOriginalNames, string rating)
         {
             //I don't know what is this shit!
             string fullpath = "./out/" + rating + tags + ExtFromURL(url);
@@ -80,7 +73,7 @@ namespace BooruDownloader
             }
         }
 
-        public string downloadPosts(string domain, string tags, int page, bool keepOriginalNames, bool includeRating)
+        public override string downloadPosts(string domain, string tags, int page, bool keepOriginalNames, bool includeRating)
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
 
@@ -120,7 +113,7 @@ namespace BooruDownloader
             return url;
         }
 
-        public int getPostCount(string domain, string tags)
+        public override int getPostCount(string domain, string tags)
         {
 
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
