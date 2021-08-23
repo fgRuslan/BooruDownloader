@@ -50,13 +50,13 @@ jobs:
 
     strategy:
       matrix:
-        configuration: [Debug, Release]
+        configuration: [Release]
 
     runs-on: windows-latest  # For a list of available runner types, refer to
                              # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
 
     env:
-      Solution_Name: BooruDownloader.sln                         # Replace with your solution name, i.e. MyWpfApp.sln.
+      Solution_Name: BooruDownloader.sln
 
     steps:
     - name: Checkout
@@ -74,11 +74,13 @@ jobs:
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v1.0.2
 
+    # Build BooruDownloader (Debug and Release)
     - name: Build
       run: msbuild $env:Solution_Name /p:Configuration=$env:Configuration
       env:
         Configuration: ${{ matrix.configuration }}
-
+    
+    # Upload artifacts
     - name: Upload build artifacts
       uses: actions/upload-artifact@v2
       with:
