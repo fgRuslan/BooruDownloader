@@ -69,9 +69,6 @@ namespace BooruDownloader
                 }
                 catch (Exception ex)
                 {
-#if DEBUG
-                    MessageBox.Show(ex.ToString(), ex.GetType().ToString());
-#endif
                     MessageBox.Show(ex.ToString(), ex.GetType().ToString());
                     //wc.DownloadFileAsync(new System.Uri(url), "./out/" + rating + FnameFromURL(url));
                 }
