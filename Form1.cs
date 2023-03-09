@@ -1,18 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Net;
-using Microsoft.Win32;
-using System.Runtime.InteropServices;
-using System.IO;
-using System.Text.RegularExpressions;
-using System.Xml;
 
 namespace BooruDownloader
 {
@@ -83,7 +73,7 @@ namespace BooruDownloader
                 else
                     engine = new GelEngine();
             }
-            int postCount = engine.getPostCount(domainBox.Text, tagsBox.Text);
+            int postCount = engine.GetPostCount(domainBox.Text, tagsBox.Text);
             Console.WriteLine(postCount);
             if (postCount == 0)
             {
@@ -110,7 +100,7 @@ namespace BooruDownloader
                 {
                     if (alreadyDownloaded <= limitBoxText)
                     {
-                        await Task.Run(() => engine.downloadPosts(domainBox.Text, tagsBox.Text, i, checkBox1.Checked, ratingCheckBox.Checked));
+                        await Task.Run(() => engine.DownloadPosts(domainBox.Text, tagsBox.Text, i, checkBox1.Checked, ratingCheckBox.Checked));
                         label4.Text = Convert.ToString(postCount - i) + " left";
                         alreadyDownloaded++;
                     }

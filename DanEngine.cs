@@ -1,15 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Net;
-using Microsoft.Win32;
-using System.Runtime.InteropServices;
 using System.IO;
+using System.Net;
+using System.Text;
 using System.Text.RegularExpressions;
-using System.Xml;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace BooruDownloader
 {
@@ -20,21 +15,21 @@ namespace BooruDownloader
             return type.DAN;
         }
 
-        public override string ExtFromURL(string line)
+        public override string ExtensionFromUrl(string line)
         {
-            var ext = "";
+            var extension = "";
             var match = Regex.Match(line, "(?:)\\.[\\d\\w]+$", RegexOptions.Compiled);
             if (match.Success)
-                ext = match.Value;
-            return ext;
+                extension = match.Value;
+            return extension;
         }
-        public override string FnameFromURL(string line)
+        public override string FilenameFromUrl(string line)
         {
-            var fname = "";
+            var filename = "";
             var match = Regex.Match(line, "(?:)[\\d\\w]+\\.[\\d\\w]+$", RegexOptions.Compiled);
             if (match.Success)
-                fname = match.Value;
-            return fname;
+                filename = match.Value;
+            return filename;
         }
 
         public override string Truncate(string value, int maxChars)
@@ -42,15 +37,15 @@ namespace BooruDownloader
             return value.Length <= maxChars ? value : value.Substring(0, maxChars) + "...";
         }
 
-        public override async void downloadImage(string url, string tags, bool keepOriginalNames, string rating)
+        public override async void DownloadImage(string url, string tags, bool keepOriginalNames, string rating)
         {
             //I don't know what is this shit!
-            string fullpath = "./out/" + rating + tags + ExtFromURL(url);
+            string fullpath = "./out/" + rating + tags + ExtensionFromUrl(url);
             string regexSearch = new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars());
             Regex r = new Regex(string.Format("[{0}]", Regex.Escape(regexSearch)));
             fullpath = r.Replace(fullpath, "");
 
-            string shortPath = Path.GetFullPath("./out/" + rating + ExtFromURL(url));
+            string shortPath = Path.GetFullPath("./out/" + rating + ExtensionFromUrl(url));
             string extension = fullpath.Substring(fullpath.Length - 5);
             if (fullpath.Length > 259)
                 fullpath = Truncate(fullpath, 259 - shortPath.Length - 4);
@@ -63,67 +58,79 @@ namespace BooruDownloader
                 try
                 {
                     if (keepOriginalNames)
-                        wc.DownloadFileAsync(new System.Uri(url), "./out/" + rating + FnameFromURL(url));
+                        wc.DownloadFileAsync(new System.Uri(url), "./out/" + rating + FilenameFromUrl(url));
                     else
                         await wc.DownloadFileTaskAsync(new System.Uri(url), "./out/" + fullpath + extension);
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.ToString(), ex.GetType().ToString());
-                    //wc.DownloadFileAsync(new System.Uri(url), "./out/" + rating + FnameFromURL(url));
+                    wc.DownloadFileAsync(new System.Uri(url), "./out/" + rating + FilenameFromUrl(url));
                 }
             }
         }
 
-        public override string downloadPosts(string domain, string tags, int page, bool keepOriginalNames, bool includeRating)
+        public override string DownloadPosts(string domain, string tags, int page, bool keepOriginalNames, bool includeRating)
         {
+            ServicePointManager.DefaultConnectionLimit = 9999;
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
 
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(domain + "/posts.xml?page=dapi&s=post&q=index&limit=1&tags=" + tags + "&page=" + page);
+            string apiKey = "";
+            string login = "";
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(domain + "/posts.xml?page=dapi&s=post&q=index&limit=1&tags=" + tags + "&page=" + page + "&api_key=" + apiKey + "&login=" + login);
+            request.UserAgent = ".NET Framework Test Client";
+            request.Accept = "text/xml";
+            //request.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0";
+
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             using (Stream stream = response.GetResponseStream())
             {
                 StreamReader reader = new StreamReader(stream, Encoding.UTF8);
-                String responseString = reader.ReadToEnd();
+                string responseString = reader.ReadToEnd();
 
-                doc.LoadXml(responseString);
-                root = doc.DocumentElement;
-                XmlNode node = (XmlNode)doc.DocumentElement;
+                document.LoadXml(responseString);
+                root = document.DocumentElement;
+                XmlNode node = document.DocumentElement;
                 XmlNode sourceNode = node.SelectSingleNode("post/file-url");
                 XmlNode tagsNode = node.SelectSingleNode("post/tag-string");
                 XmlNode ratingNode = node.SelectSingleNode("post/rating");
+
                 if (sourceNode == null)
                 {
                     return "";
                 }
+
                 url = sourceNode.InnerXml;
-                var tagstring = tagsNode.InnerXml;
+                var postTags = tagsNode.InnerXml;
                 var rating = ratingNode.InnerXml;
-                var ratingstr = "";
+
                 if (includeRating)
                 {
                     if (rating == "q")
-                        ratingstr = "questionable ";
-                    if (rating == "e")
-                        ratingstr = "nsfw ";
+                        rating = "questionable ";
+                    if (rating == "e" || rating == "explicit")
+                        rating = "nsfw ";
                     if (rating == "s")
-                        ratingstr = "safe ";
+                        rating = "safe ";
                 }
                 Console.WriteLine(url);
-                downloadImage(url, tagstring, keepOriginalNames, ratingstr);
+                DownloadImage(url, postTags, keepOriginalNames, rating);
             }
             return url;
         }
 
-        public override int getPostCount(string domain, string tags)
+        public override int GetPostCount(string domain, string tags)
         {
-
+            ServicePointManager.DefaultConnectionLimit = 9999;
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
 
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(domain + "/posts.xml?page=dapi&s=post&q=index&tags=" + tags);
-            request.Credentials = CredentialCache.DefaultCredentials;
-            //request.UserAgent = "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)";
+            string apiKey = "";
+            string login = "";
 
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(domain + "/posts.xml?page=dapi&s=post&q=index&tags=" + tags + "&api_key=" + apiKey + "&login=" + login);
+            request.UserAgent = ".NET Framework Test Client";
+            request.Accept = "text/xml";
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 #if DEBUG
             AllocConsole();
@@ -131,17 +138,12 @@ namespace BooruDownloader
             using (Stream stream = response.GetResponseStream())
             {
                 StreamReader reader = new StreamReader(stream, Encoding.UTF8);
-                String responseString = reader.ReadToEnd();
-                doc.LoadXml(responseString);
-                root = doc.DocumentElement;
+                string responseString = reader.ReadToEnd();
+                document.LoadXml(responseString);
+                root = document.DocumentElement;
 
-                XmlNodeList elemList = root.GetElementsByTagName("post");
-                int count = 0;
-                for (int i = 0; i < elemList.Count; i++)
-                {
-                    count++;
-                }
-                return Convert.ToInt32(count);
+                XmlNodeList elementList = root.GetElementsByTagName("post");
+                return Convert.ToInt32(elementList.Count);
             }
         }
     }
