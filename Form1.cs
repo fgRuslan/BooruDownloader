@@ -73,7 +73,12 @@ namespace BooruDownloader
                 else
                     engine = new GelEngine();
             }
+
+            engine.SetApiKey(apiKeyTextBox.Text);
+            engine.SetLogin(loginTextBox.Text);
+
             int postCount = engine.GetPostCount(domainBox.Text, tagsBox.Text);
+            alreadyDownloaded = 0;
             Console.WriteLine(postCount);
             if (postCount == 0)
             {
@@ -91,7 +96,7 @@ namespace BooruDownloader
                 {
                     limitBoxText = int.Parse(limitBox.Text);
                 }
-                catch (Exception e1)
+                catch (Exception)
                 {
                     limitBox.Text = "999";
                     limitBoxText = 999;

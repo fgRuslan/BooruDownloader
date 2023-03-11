@@ -55,17 +55,18 @@ namespace BooruDownloader
             {
                 // wc.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; " +
                 //                      "Windows NT 5.2; .NET CLR 1.0.3705;)");
+                wc.Headers.Add("user-agent", ".NET Framework Test Client");
                 try
                 {
                     if (keepOriginalNames)
-                        wc.DownloadFileAsync(new System.Uri(url), "./out/" + rating + FilenameFromUrl(url));
+                        wc.DownloadFileTaskAsync(new System.Uri(url), "./out/" + rating + FilenameFromUrl(url)).Wait();
                     else
-                        await wc.DownloadFileTaskAsync(new System.Uri(url), "./out/" + fullpath + extension);
+                        wc.DownloadFileTaskAsync(new System.Uri(url), "./out/" + fullpath + extension).Wait();
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.ToString(), ex.GetType().ToString());
-                    wc.DownloadFileAsync(new System.Uri(url), "./out/" + rating + FilenameFromUrl(url));
+                    //wc.DownloadFileAsync(new System.Uri(url), "./out/" + rating + FilenameFromUrl(url));
                 }
             }
         }
@@ -75,10 +76,7 @@ namespace BooruDownloader
             ServicePointManager.DefaultConnectionLimit = 9999;
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
 
-            string apiKey = "";
-            string login = "";
-
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(domain + "/posts.xml?page=dapi&s=post&q=index&limit=1&tags=" + tags + "&page=" + page + "&api_key=" + apiKey + "&login=" + login);
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(domain + "/posts.xml?page=dapi&s=post&q=index&limit=1&tags=" + tags + "&page=" + page + "&api_key=" + this.apiKey + "&login=" + this.login);
             request.UserAgent = ".NET Framework Test Client";
             request.Accept = "text/xml";
             //request.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0";
@@ -125,10 +123,7 @@ namespace BooruDownloader
             ServicePointManager.DefaultConnectionLimit = 9999;
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
 
-            string apiKey = "";
-            string login = "";
-
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(domain + "/posts.xml?page=dapi&s=post&q=index&tags=" + tags + "&api_key=" + apiKey + "&login=" + login);
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(domain + "/posts.xml?page=dapi&s=post&q=index&tags=" + tags + "&api_key=" + this.apiKey + "&login=" + this.login);
             request.UserAgent = ".NET Framework Test Client";
             request.Accept = "text/xml";
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();

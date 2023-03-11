@@ -11,6 +11,9 @@ namespace BooruDownloader
         public string url;
         public string rating;
 
+        protected string apiKey;
+        protected string login;
+
         public enum type
         {
             DAN = 0,
@@ -27,5 +30,14 @@ namespace BooruDownloader
         public abstract string DownloadPosts(string url, string tags, int page, bool keepOrigName, bool inclRating);
         public abstract int GetPostCount(string domain, string tags);
         public abstract type getType();
+
+        public virtual void SetApiKey(string apiKey)
+        {
+            this.apiKey = apiKey;
+        }
+        public virtual void SetLogin(string login)
+        {
+            this.login = login;
+        }
     }
 }

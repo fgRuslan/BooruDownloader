@@ -76,7 +76,7 @@ namespace BooruDownloader
             ServicePointManager.DefaultConnectionLimit = 9999;
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12 | SecurityProtocolType.Ssl3;
 
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(domain + "/index.php?page=dapi&s=post&q=index&limit=1&tags=" + tags);
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(domain + "/index.php?page=dapi&s=post&q=index&limit=1&tags=" + tags + "&api_key=" + this.apiKey + "&user_id=" + this.login);
             request.UserAgent = ".NET Framework Test Client";
             request.Accept = "text/xml";
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
@@ -102,7 +102,7 @@ namespace BooruDownloader
             ServicePointManager.DefaultConnectionLimit = 9999;
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12 | SecurityProtocolType.Ssl3;
 
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(domain + "/index.php?page=dapi&s=post&q=index&limit=1&tags=" + tags + "&pid=" + page);
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(domain + "/index.php?page=dapi&s=post&q=index&limit=1&tags=" + tags + "&pid=" + page + "&api_key=" + this.apiKey + "&user_id=" + this.login);
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             using (Stream stream = response.GetResponseStream())
             {

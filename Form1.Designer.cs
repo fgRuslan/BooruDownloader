@@ -43,6 +43,10 @@
             this.label5 = new System.Windows.Forms.Label();
             this.limitBox = new System.Windows.Forms.TextBox();
             this.isDanbooruSite = new System.Windows.Forms.CheckBox();
+            this.apiKeyTextBox = new System.Windows.Forms.TextBox();
+            this.loginTextBox = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // tagsBox
@@ -54,7 +58,7 @@
             // 
             // downloadButton
             // 
-            this.downloadButton.Location = new System.Drawing.Point(74, 71);
+            this.downloadButton.Location = new System.Drawing.Point(74, 133);
             this.downloadButton.Name = "downloadButton";
             this.downloadButton.Size = new System.Drawing.Size(75, 23);
             this.downloadButton.TabIndex = 1;
@@ -112,7 +116,7 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(155, 75);
+            this.checkBox1.Location = new System.Drawing.Point(155, 137);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(121, 17);
             this.checkBox1.TabIndex = 8;
@@ -134,7 +138,7 @@
             // ratingCheckBox
             // 
             this.ratingCheckBox.AutoSize = true;
-            this.ratingCheckBox.Location = new System.Drawing.Point(155, 98);
+            this.ratingCheckBox.Location = new System.Drawing.Point(155, 160);
             this.ratingCheckBox.Name = "ratingCheckBox";
             this.ratingCheckBox.Size = new System.Drawing.Size(216, 17);
             this.ratingCheckBox.TabIndex = 11;
@@ -143,7 +147,7 @@
             // 
             // detectButton
             // 
-            this.detectButton.Location = new System.Drawing.Point(74, 94);
+            this.detectButton.Location = new System.Drawing.Point(74, 156);
             this.detectButton.Name = "detectButton";
             this.detectButton.Size = new System.Drawing.Size(75, 23);
             this.detectButton.TabIndex = 12;
@@ -177,11 +181,47 @@
             this.isDanbooruSite.Text = "Danbooru";
             this.isDanbooruSite.UseVisualStyleBackColor = true;
             // 
+            // apiKeyTextBox
+            // 
+            this.apiKeyTextBox.Location = new System.Drawing.Point(74, 72);
+            this.apiKeyTextBox.Name = "apiKeyTextBox";
+            this.apiKeyTextBox.Size = new System.Drawing.Size(202, 20);
+            this.apiKeyTextBox.TabIndex = 15;
+            // 
+            // loginTextBox
+            // 
+            this.loginTextBox.Location = new System.Drawing.Point(74, 99);
+            this.loginTextBox.Name = "loginTextBox";
+            this.loginTextBox.Size = new System.Drawing.Size(202, 20);
+            this.loginTextBox.TabIndex = 16;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(19, 77);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(48, 13);
+            this.label6.TabIndex = 17;
+            this.label6.Text = "API Key:";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(19, 102);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(36, 13);
+            this.label7.TabIndex = 18;
+            this.label7.Text = "Login:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(624, 137);
+            this.ClientSize = new System.Drawing.Size(624, 186);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.loginTextBox);
+            this.Controls.Add(this.apiKeyTextBox);
             this.Controls.Add(this.isDanbooruSite);
             this.Controls.Add(this.limitBox);
             this.Controls.Add(this.label5);
@@ -221,6 +261,10 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox limitBox;
         private System.Windows.Forms.CheckBox isDanbooruSite;
+        private System.Windows.Forms.TextBox apiKeyTextBox;
+        private System.Windows.Forms.TextBox loginTextBox;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
     }
 }
 
