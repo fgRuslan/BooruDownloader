@@ -47,6 +47,8 @@
             this.loginTextBox = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
+            this.offsetTextBox = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // tagsBox
@@ -213,11 +215,29 @@
             this.label7.TabIndex = 18;
             this.label7.Text = "Login:";
             // 
+            // offsetTextBox
+            // 
+            this.offsetTextBox.Location = new System.Drawing.Point(500, 103);
+            this.offsetTextBox.Name = "offsetTextBox";
+            this.offsetTextBox.Size = new System.Drawing.Size(47, 20);
+            this.offsetTextBox.TabIndex = 19;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(413, 106);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(38, 13);
+            this.label8.TabIndex = 20;
+            this.label8.Text = "Offset:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(624, 186);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.offsetTextBox);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.loginTextBox);
@@ -265,6 +285,8 @@
         private System.Windows.Forms.TextBox loginTextBox;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox offsetTextBox;
+        private System.Windows.Forms.Label label8;
     }
 }
 

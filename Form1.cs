@@ -101,7 +101,19 @@ namespace BooruDownloader
                     limitBox.Text = "999";
                     limitBoxText = 999;
                 }
-                for (int i = 1; i < postCount; i++)
+
+                int offset;
+                try
+                {
+                    offset = int.Parse(offsetTextBox.Text);
+                }
+                catch (Exception)
+                {
+                    offsetTextBox.Text = "0";
+                    offset = 0;
+                }
+
+                for (int i = offset; i < postCount; i++)
                 {
                     if (alreadyDownloaded <= limitBoxText)
                     {
