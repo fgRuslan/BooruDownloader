@@ -123,7 +123,12 @@ namespace BooruDownloader
             ServicePointManager.DefaultConnectionLimit = 9999;
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
 
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(domain + "/posts.xml?page=dapi&s=post&q=index&tags=" + tags + "&api_key=" + this.apiKey + "&login=" + this.login);
+            string requestString = domain + "/posts.xml?page=dapi&s=post&q=index&tags=" + tags;
+
+            if (this.login != "" && this.apiKey != "")
+                requestString += "&api_key=" + this.apiKey + "&login=" + this.login;
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(requestString);
             request.UserAgent = ".NET Framework Test Client";
             request.Accept = "text/xml";
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
