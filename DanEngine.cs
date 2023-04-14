@@ -15,41 +15,26 @@ namespace BooruDownloader
             return type.DAN;
         }
 
-        public override string ExtensionFromUrl(string line)
-        {
-            var extension = "";
-            var match = Regex.Match(line, "(?:)\\.[\\d\\w]+$", RegexOptions.Compiled);
-            if (match.Success)
-                extension = match.Value;
-            return extension;
-        }
-        public override string FilenameFromUrl(string line)
-        {
-            var filename = "";
-            var match = Regex.Match(line, "(?:)[\\d\\w]+\\.[\\d\\w]+$", RegexOptions.Compiled);
-            if (match.Success)
-                filename = match.Value;
-            return filename;
-        }
-
-        public override string Truncate(string value, int maxChars)
-        {
-            return value.Length <= maxChars ? value : value.Substring(0, maxChars) + "...";
-        }
-
         public override async void DownloadImage(string url, string tags, bool keepOriginalNames, string rating)
         {
-            //I don't know what is this shit!
-            string fullpath = "./out/" + rating + tags + ExtensionFromUrl(url);
+            string filename = rating + tags;
+
             string regexSearch = new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars());
             Regex r = new Regex(string.Format("[{0}]", Regex.Escape(regexSearch)));
-            fullpath = r.Replace(fullpath, "");
+            filename = r.Replace(filename, "");
 
-            string shortPath = Path.GetFullPath("./out/" + rating + ExtensionFromUrl(url));
-            string extension = fullpath.Substring(fullpath.Length - 5);
-            if (fullpath.Length > 259)
-                fullpath = Truncate(fullpath, 259 - shortPath.Length - 4);
-            fullpath = fullpath.Substring(5);
+            string fullPath = Path.GetFullPath("./out/") + filename + "." + ExtensionFromUrl(url);
+
+            try
+            {
+                int pathlen = Path.GetFullPath(fullPath).Length;
+            }
+            catch (PathTooLongException)//If path is invalid because the filename is too long
+            {
+                int difference = fullPath.Length - 259;//259 is the max path length
+                filename = filename.Remove(filename.Length - difference);
+                fullPath = Path.GetFullPath("./out/") + filename + "." + ExtensionFromUrl(url);
+            }
 
             using (WebClient wc = new WebClient())
             {
@@ -59,9 +44,9 @@ namespace BooruDownloader
                 try
                 {
                     if (keepOriginalNames)
-                        wc.DownloadFileTaskAsync(new System.Uri(url), "./out/" + rating + FilenameFromUrl(url)).Wait();
+                        wc.DownloadFileTaskAsync(new System.Uri(url), fullPath).Wait();
                     else
-                        wc.DownloadFileTaskAsync(new System.Uri(url), "./out/" + fullpath + extension).Wait();
+                        wc.DownloadFileTaskAsync(new System.Uri(url), fullPath).Wait();
                 }
                 catch (Exception ex)
                 {
@@ -107,10 +92,12 @@ namespace BooruDownloader
                 {
                     if (rating == "q")
                         rating = "questionable ";
-                    if (rating == "e" || rating == "explicit")
+                    else if (rating == "e" || rating == "explicit")
                         rating = "nsfw ";
-                    if (rating == "s")
+                    else if (rating == "s")
                         rating = "safe ";
+                    else
+                        rating = rating + " ";
                 }
                 Console.WriteLine(url);
                 DownloadImage(url, postTags, keepOriginalNames, rating);

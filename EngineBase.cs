@@ -1,4 +1,5 @@
 ﻿using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 using System.Xml;
 
 namespace BooruDownloader
@@ -23,9 +24,6 @@ namespace BooruDownloader
         [DllImport("kernel32.dll", SetLastError = true)]
         public static extern bool AllocConsole();
 
-        public abstract string ExtensionFromUrl(string line);
-        public abstract string FilenameFromUrl(string line);
-        public abstract string Truncate(string line, int mChar);
         public abstract void DownloadImage(string url, string tags, bool keepOrigName, string rating);
         public abstract string DownloadPosts(string url, string tags, int page, bool keepOrigName, bool inclRating);
         public abstract int GetPostCount(string domain, string tags);
@@ -38,6 +36,24 @@ namespace BooruDownloader
         public virtual void SetLogin(string login)
         {
             this.login = login;
+        }
+
+        public virtual string ExtensionFromUrl(string url)
+        {
+            var extension = "";
+            var match = Regex.Match(url, @"(?<=\.)[^.]+$", RegexOptions.Compiled);
+            if (match.Success)
+                extension = match.Value;
+            return extension;
+        }
+
+        public virtual string FilenameFromUrl(string url)
+        {
+            var filename = "";
+            var match = Regex.Match(url, @"([^\/.]+)\.[^.]*$", RegexOptions.Compiled);
+            if (match.Success)
+                filename = match.Value;
+            return filename;
         }
     }
 }
